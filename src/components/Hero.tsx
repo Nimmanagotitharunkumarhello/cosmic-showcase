@@ -1,54 +1,59 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ArrowDown } from '@phosphor-icons/react';
 
 const Hero = () => {
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const splineRef = useRef<HTMLDivElement>(null);
-  const orbsRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const dotsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const tl = gsap.timeline({ delay: 3.2 });
 
+    // Animate tagline
+    tl.fromTo('.hero-tagline',
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
+    );
+
     // Animate headline
-    tl.fromTo(headlineRef.current,
+    tl.fromTo('.hero-headline',
       { opacity: 0, y: 60, filter: 'blur(10px)' },
-      { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: 'power3.out' }
+      { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: 'power3.out' },
+      '-=0.3'
     );
 
     // Animate subtitle
-    tl.fromTo(subtitleRef.current,
+    tl.fromTo('.hero-subtitle',
       { opacity: 0, y: 40 },
       { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
       '-=0.6'
     );
 
-    // Animate CTA
-    tl.fromTo(ctaRef.current,
+    // Animate description
+    tl.fromTo('.hero-description',
       { opacity: 0, y: 30 },
       { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
       '-=0.4'
     );
 
-    // Animate Spline container
-    tl.fromTo(splineRef.current,
-      { opacity: 0, x: 100 },
-      { opacity: 1, x: 0, duration: 1, ease: 'power2.out' },
-      '-=1'
+    // Animate buttons
+    tl.fromTo('.hero-buttons',
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+      '-=0.3'
     );
 
-    // Floating orbs animation
-    if (orbsRef.current) {
-      const orbs = orbsRef.current.querySelectorAll('.glow-orb');
-      orbs.forEach((orb, index) => {
-        gsap.to(orb, {
-          y: -30,
-          duration: 3 + index * 0.5,
+    // Floating dots animation
+    if (dotsRef.current) {
+      const dots = dotsRef.current.querySelectorAll('.floating-dot');
+      dots.forEach((dot, index) => {
+        gsap.to(dot, {
+          y: -20 + Math.random() * 40,
+          x: -10 + Math.random() * 20,
+          duration: 3 + Math.random() * 2,
           repeat: -1,
           yoyo: true,
           ease: 'power1.inOut',
+          delay: index * 0.2,
         });
       });
     }
@@ -73,93 +78,101 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-glow" />
-      <div className="absolute inset-0 grid-bg opacity-20" />
-      
-      {/* Light beam from top */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[800px] opacity-30" style={{
-        background: 'conic-gradient(from 90deg at 50% 0%, transparent 60deg, hsl(185 85% 50% / 0.1) 90deg, transparent 120deg)',
-      }} />
-
-      {/* Decorative X marks like reference */}
-      <div className="absolute top-1/4 left-[15%] text-border/30 text-6xl font-thin select-none">×</div>
-      <div className="absolute top-1/4 right-[15%] text-border/30 text-6xl font-thin select-none">×</div>
-      <div className="absolute bottom-1/3 left-[10%] text-border/20 text-4xl font-thin select-none">×</div>
-      <div className="absolute bottom-1/4 right-[10%] text-border/20 text-4xl font-thin select-none">×</div>
-      
-      {/* Floating glow orbs */}
-      <div ref={orbsRef} className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="glow-orb w-96 h-96 -top-20 -left-20 opacity-40" />
-        <div className="glow-orb w-64 h-64 top-1/3 right-1/4 opacity-30" />
-        <div className="glow-orb w-48 h-48 bottom-1/4 left-1/3 opacity-25" style={{ background: 'radial-gradient(circle, hsl(260 80% 60% / 0.3), transparent 70%)' }} />
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Fullscreen Spline 3D Background */}
+      <div className="absolute inset-0 z-0">
+        <iframe 
+          src='https://my.spline.design/orb-x3KbIiv7mkMK8ZOPA59TUCpF/' 
+          frameBorder='0' 
+          width='100%' 
+          height='100%'
+          className="scale-125"
+          title="3D Orb Animation"
+          style={{ pointerEvents: 'none' }}
+        />
+        {/* Overlay gradient for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
       </div>
 
-      <div className="container mx-auto px-6 pt-24 pb-12 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-          {/* Left content */}
-          <div className="space-y-8">
-            <div className="space-y-2">
-              <span className="text-primary/80 text-sm tracking-widest uppercase">Introducing</span>
-            </div>
-            <h1 
-              ref={headlineRef} 
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight opacity-0"
-            >
-              <span className="text-foreground">Hi, I'm </span>
-              <span className="gradient-text block">Nimmanagoti</span>
-              <span className="gradient-text block">Tharun Kumar</span>
-              <span className="block text-2xl sm:text-3xl md:text-4xl font-light text-muted-foreground mt-4">
-                AI & ML Engineer
-              </span>
-            </h1>
+      {/* Floating dots */}
+      <div ref={dotsRef} className="absolute inset-0 pointer-events-none z-10">
+        {/* Cyan dots */}
+        <div className="floating-dot absolute w-3 h-3 rounded-full bg-primary top-[20%] left-[25%] opacity-80" />
+        <div className="floating-dot absolute w-2 h-2 rounded-full bg-primary top-[60%] left-[15%] opacity-60" />
+        <div className="floating-dot absolute w-4 h-4 rounded-full bg-primary/80 bottom-[35%] right-[20%] opacity-70" />
+        
+        {/* Purple/Pink dots */}
+        <div className="floating-dot absolute w-2 h-2 rounded-full bg-[hsl(280,80%,60%)] top-[15%] left-[40%] opacity-60" />
+        <div className="floating-dot absolute w-3 h-3 rounded-full bg-[hsl(320,80%,60%)] top-[25%] right-[30%] opacity-50" />
+        <div className="floating-dot absolute w-2 h-2 rounded-full bg-[hsl(280,70%,50%)] bottom-[40%] left-[35%] opacity-40" />
+        
+        {/* Green dots */}
+        <div className="floating-dot absolute w-3 h-3 rounded-full bg-emerald-400 top-[30%] right-[25%] opacity-70" />
+        <div className="floating-dot absolute w-2 h-2 rounded-full bg-emerald-500 bottom-[30%] right-[35%] opacity-50" />
+      </div>
 
-            <p 
-              ref={subtitleRef}
-              className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed opacity-0"
-            >
-              Building intelligent solutions with machine learning, AI voice agents, 
-              and clean web interfaces. Turning complex problems into elegant code.
-            </p>
+      {/* Centered content */}
+      <div 
+        ref={contentRef}
+        className="relative z-20 text-center px-6 max-w-4xl mx-auto"
+      >
+        {/* Tagline */}
+        <p className="hero-tagline text-primary text-sm md:text-base tracking-[0.3em] uppercase mb-6 opacity-0">
+          Welcome To My World
+        </p>
 
-            <div ref={ctaRef} className="flex flex-wrap gap-4 opacity-0">
-              <button onClick={scrollToContact} className="btn-glow text-primary-foreground">
-                Say Hello 👋
-              </button>
-              <button onClick={scrollToProjects} className="btn-outline-glow">
-                View Projects
-              </button>
-            </div>
-          </div>
+        {/* Main headline */}
+        <h1 className="hero-headline text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight mb-4 opacity-0">
+          <span className="text-foreground">Hi, I'm </span>
+          <span className="bg-gradient-to-r from-[hsl(280,80%,60%)] via-[hsl(320,80%,55%)] to-primary bg-clip-text text-transparent">
+            Tharun
+          </span>
+        </h1>
 
-          {/* Right content - Spline 3D */}
-          <div 
-            ref={splineRef}
-            className="relative h-[400px] md:h-[500px] lg:h-[600px] opacity-0"
+        {/* Subtitle */}
+        <h2 className="hero-subtitle text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-8 opacity-0">
+          AI & ML Engineer
+        </h2>
+
+        {/* Description */}
+        <p className="hero-description text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10 opacity-0">
+          Crafting intelligent solutions that inspire and engage through innovative 
+          AI and cutting-edge technology. Specializing in machine learning with a 
+          passion for creating impactful applications.
+        </p>
+
+        {/* CTA Buttons */}
+        <div className="hero-buttons flex flex-wrap items-center justify-center gap-4 opacity-0">
+          <button 
+            onClick={scrollToProjects}
+            className="px-8 py-4 rounded-full border border-border/50 text-foreground font-medium transition-all duration-300 hover:bg-card/50 hover:border-border"
           >
-            <iframe 
-              src='https://my.spline.design/orb-x3KbIiv7mkMK8ZOPA59TUCpF/' 
-              frameBorder='0' 
-              width='100%' 
-              height='100%'
-              className="rounded-2xl"
-              title="3D Orb Animation"
-            />
-            {/* Glow effect behind spline */}
-            <div className="absolute inset-0 -z-10 rounded-2xl" style={{ 
-              background: 'radial-gradient(circle at center, hsl(185 85% 50% / 0.2), transparent 60%)',
-              filter: 'blur(40px)'
-            }} />
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-muted-foreground text-sm">Scroll</span>
-          <ArrowDown size={20} className="text-primary" />
+            View My Work
+          </button>
+          <button 
+            onClick={scrollToContact}
+            className="px-8 py-4 rounded-full font-medium transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, hsl(185 85% 45%), hsl(185 85% 55%))',
+              color: 'hsl(220 30% 6%)',
+              boxShadow: '0 0 30px hsl(185 85% 50% / 0.4)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 0 50px hsl(185 85% 50% / 0.6)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = '0 0 30px hsl(185 85% 50% / 0.4)';
+            }}
+          >
+            Hire Me Now
+          </button>
         </div>
       </div>
+
+      {/* Bottom glow effect */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary/10 to-transparent z-10" />
     </section>
   );
 };
