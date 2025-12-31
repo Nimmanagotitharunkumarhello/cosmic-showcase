@@ -10,18 +10,22 @@ const MouseCursor = () => {
     const dot = dotRef.current;
     if (!cursor || !dot) return;
 
+    // Set initial position off-screen, will move on first mouse event
+    gsap.set(cursor, { x: -100, y: -100 });
+    gsap.set(dot, { x: -100, y: -100 });
+
     const moveCursor = (e: MouseEvent) => {
       gsap.to(cursor, {
         x: e.clientX,
         y: e.clientY,
-        duration: 0.5,
+        duration: 0.4,
         ease: 'power2.out',
       });
       gsap.to(dot, {
         x: e.clientX,
         y: e.clientY,
-        duration: 0.1,
-        ease: 'power2.out',
+        duration: 0.08,
+        ease: 'none',
       });
     };
 
