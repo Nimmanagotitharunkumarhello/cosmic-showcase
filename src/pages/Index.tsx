@@ -40,8 +40,8 @@ const Index = () => {
         <link rel="canonical" href="/" />
       </Helmet>
 
-      {/* Mouse cursor - only show after entering */}
-      {hasEntered && <MouseCursor />}
+      {/* Mouse cursor - show on enter screen and after */}
+      {(showEnterScreen || hasEntered) && <MouseCursor />}
 
       {/* Preloader */}
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
