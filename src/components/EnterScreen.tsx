@@ -35,14 +35,6 @@ const EnterScreen = ({ onEnter }: EnterScreenProps) => {
       ref={screenRef}
       className="fixed inset-0 z-[100] bg-background flex items-center justify-center"
     >
-      {/* Circle with dot - top left */}
-      <div className="absolute top-16 left-16">
-        <div className="relative w-12 h-12">
-          <div className="w-full h-full rounded-full border border-white/30" />
-          <div className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-white" />
-        </div>
-      </div>
-
       {/* Enter button */}
       <button
         ref={buttonRef}
