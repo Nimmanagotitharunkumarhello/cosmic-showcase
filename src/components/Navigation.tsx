@@ -52,7 +52,7 @@ const Navigation = () => {
           <a 
             href="#home" 
             onClick={(e) => { e.preventDefault(); scrollToSection('#home'); }}
-            className="text-2xl font-bold gradient-text hover:opacity-80 transition-opacity"
+            className="text-2xl font-bold text-primary hover:opacity-80 transition-opacity"
           >
             TK
           </a>
@@ -75,9 +75,9 @@ const Navigation = () => {
           <a
             href="#contact"
             onClick={(e) => { e.preventDefault(); scrollToSection('#contact'); }}
-            className="hidden md:block btn-outline-glow text-sm px-6 py-2"
+            className="hidden md:flex items-center px-6 py-2.5 rounded-full border border-primary text-primary text-sm font-medium transition-all duration-300 hover:bg-primary/10 hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
           >
-            Say Hello
+            Hire Me
           </a>
 
           {/* Mobile Menu Button */}
