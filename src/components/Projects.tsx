@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight } from '@phosphor-icons/react';
 
 import project1 from '@/assets/project-1.png';
 import project2 from '@/assets/project-2.png';
@@ -15,45 +14,45 @@ gsap.registerPlugin(ScrollTrigger);
 const projects = [
   {
     id: 1,
-    title: '3D Interactive Web',
-    description: 'Email platform for developers with React, Three.js & Spline integration',
-    image: project1,
-    tags: ['React', 'Spline', 'GSAP'],
+    title: '3D Gaming Interface',
+    description: 'Next-level gaming UI with immersive 3D elements and real-time animations',
+    image: project2,
+    tags: ['React', 'Three.js', 'GSAP'],
   },
   {
     id: 2,
-    title: 'Gaming UI Platform',
-    description: 'Next-level gaming interface with 3D characters and NFT store integration',
-    image: project2,
-    tags: ['React', 'Three.js', 'Web3'],
+    title: '3D Portfolio Website',
+    description: 'Modern portfolio with Spline 3D integration and smooth animations',
+    image: project3,
+    tags: ['React', 'Spline', 'GSAP'],
   },
   {
     id: 3,
-    title: '3D Portfolio',
-    description: 'Creative developer portfolio with immersive UI/UX and Spline models',
-    image: project3,
-    tags: ['Spline', 'React', 'CSS'],
+    title: 'Gaming Platform',
+    description: 'Complete gaming website with character profiles and interactive elements',
+    image: project4,
+    tags: ['React', 'CSS3', 'JavaScript'],
   },
   {
     id: 4,
-    title: 'Gaming Website',
-    description: 'Modern gaming website with vibrant visuals and anime-style graphics',
-    image: project4,
-    tags: ['HTML', 'CSS', 'JavaScript'],
+    title: 'Creative Portfolio',
+    description: 'Animated portfolio with step-by-step tutorials and modern design',
+    image: project6,
+    tags: ['React', 'GSAP', 'CSS3'],
   },
   {
     id: 5,
-    title: 'Web Animation Tools',
-    description: 'Portfolio showcasing animation tools with Locomotive Scroll integration',
+    title: 'Animation Tools',
+    description: 'Web animation tools platform with learn-by-doing approach',
     image: project5,
-    tags: ['React', 'Tailwind', 'GSAP'],
+    tags: ['React', 'GSAP', 'WebGL'],
   },
   {
     id: 6,
-    title: 'Animated Portfolio',
-    description: 'Step-by-step animated portfolio with smooth transitions and modern design',
-    image: project6,
-    tags: ['CSS', 'JavaScript', 'GSAP'],
+    title: '3D Interactive Web',
+    description: 'Interactive 3D web experience with email development tools',
+    image: project1,
+    tags: ['React', 'Three.js', 'Node.js'],
   },
 ];
 
@@ -94,7 +93,7 @@ const Projects = () => {
         y: 0,
         scale: 1,
         duration: 0.6,
-        stagger: 0.15,
+        stagger: 0.12,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: cardsContainer,
@@ -115,64 +114,60 @@ const Projects = () => {
       className="relative py-24 md:py-32 overflow-hidden"
     >
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-card/30 via-background to-card/20" />
+      
+      {/* Top divider line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       
       <div className="container mx-auto px-6 relative z-10">
         {/* Section header */}
         <div ref={headerRef} className="text-center mb-16">
-          <span className="text-primary text-sm font-medium tracking-widest uppercase mb-4 block">
-            Portfolio
-          </span>
-          <h2 className="section-heading">Featured Projects</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-4">
-            A collection of my recent work showcasing web development, 
-            3D design, and interactive experiences.
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <span className="text-foreground">Featured </span>
+            <span className="bg-gradient-to-r from-[hsl(280,70%,50%)] to-primary bg-clip-text text-transparent">Projects</span>
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+            Explore my latest work showcasing cutting-edge web technologies, 3D interactions, 
+            and immersive user experiences.
           </p>
         </div>
 
-        {/* Projects grid - Bento style */}
+        {/* Projects grid - 3x2 layout */}
         <div 
           ref={cardsContainerRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <div 
               key={project.id} 
-              className={`project-card glow-border ${
-                index === 0 || index === 3 ? 'lg:col-span-2 lg:row-span-1' : ''
-              }`}
+              className="project-card glass rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_40px_hsl(var(--primary)/0.2)] group"
             >
               {/* Image */}
-              <div className="relative h-48 md:h-56 overflow-hidden">
+              <div className="relative h-48 overflow-hidden">
                 <img 
                   src={project.image} 
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent opacity-60" />
               </div>
               
               {/* Content */}
-              <div className="p-6 space-y-4">
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-xl font-semibold text-foreground">
-                    {project.title}
-                  </h3>
-                  <button className="flex-shrink-0 w-10 h-10 rounded-full glass flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 group">
-                    <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </button>
-                </div>
+              <div className="p-6 space-y-3">
+                <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                  {project.title}
+                </h3>
                 
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   {project.description}
                 </p>
                 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 pt-2">
                   {project.tags.map((tag) => (
                     <span 
                       key={tag}
-                      className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20"
+                      className="text-xs px-3 py-1.5 rounded-full bg-[hsl(280,70%,50%)]/10 text-[hsl(280,70%,50%)] border border-[hsl(280,70%,50%)]/20 transition-all duration-300 hover:bg-[hsl(280,70%,50%)]/20"
                     >
                       {tag}
                     </span>
