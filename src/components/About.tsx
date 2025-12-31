@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
@@ -26,11 +26,18 @@ const skills = [
   { name: 'GitHub', icon: GitBranch },
 ];
 
+const paragraphs = [
+  "I am an AI & ML intern focused on building practical machine-learning solutions and AI voice agents. I work primarily with Python and classical ML techniques, and I use prompt engineering to design effective AI workflows.",
+  "Alongside AI/ML, I build clean web interfaces using AI-assisted development and have foundational backend experience for integrating models into applications. I actively contribute to open-source programs like Social Winter of Code and Elite Winter of Code.",
+  "My goal is to grow into a strong AI/ML engineer by working on real problems, not just tutorials."
+];
+
 const About = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
+  const [activePara, setActivePara] = useState<number | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -109,9 +116,9 @@ const About = () => {
       <div className="absolute bottom-1/3 left-1/4 w-2 h-2 rounded-full bg-primary opacity-50 animate-float animation-delay-200" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-          {/* Left - Profile image */}
-          <div ref={imageRef} className="relative flex justify-center lg:justify-start">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          {/* Left - Profile image - CENTERED */}
+          <div ref={imageRef} className="relative flex justify-center">
             <div className="relative">
               {/* Glowing ring */}
               <div className="absolute inset-0 rounded-full animate-spin-slow opacity-40" style={{
@@ -146,23 +153,21 @@ const About = () => {
               <div className="w-16 h-1 bg-primary rounded-full" />
             </div>
 
-            {/* Bio text */}
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p>
-                I am an AI & ML intern focused on building practical machine-learning solutions 
-                and AI voice agents. I work primarily with Python and classical ML techniques, 
-                and I use prompt engineering to design effective AI workflows.
-              </p>
-              <p>
-                Alongside AI/ML, I build clean web interfaces using AI-assisted development and 
-                have foundational backend experience for integrating models into applications. 
-                I actively contribute to open-source programs like Social Winter of Code and 
-                Elite Winter of Code.
-              </p>
-              <p className="text-foreground font-medium">
-                My goal is to grow into a strong AI/ML engineer by working on real problems, 
-                not just tutorials.
-              </p>
+            {/* Bio text - Click to glow */}
+            <div className="space-y-4">
+              {paragraphs.map((text, index) => (
+                <p
+                  key={index}
+                  onClick={() => setActivePara(activePara === index ? null : index)}
+                  className={`leading-relaxed cursor-pointer transition-all duration-500 ${
+                    activePara === index 
+                      ? 'text-foreground font-medium drop-shadow-[0_0_10px_hsl(185,85%,50%)]' 
+                      : 'text-muted-foreground hover:text-muted-foreground/80'
+                  }`}
+                >
+                  {text}
+                </p>
+              ))}
             </div>
 
             {/* Tech Stack */}

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Preloader from '@/components/Preloader';
+import EnterScreen from '@/components/EnterScreen';
+import MouseCursor from '@/components/MouseCursor';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
@@ -10,9 +12,17 @@ import Footer from '@/components/Footer';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showEnterScreen, setShowEnterScreen] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
 
   const handlePreloaderComplete = useCallback(() => {
     setIsLoading(false);
+    setShowEnterScreen(true);
+  }, []);
+
+  const handleEnter = useCallback(() => {
+    setShowEnterScreen(false);
+    setHasEntered(true);
   }, []);
 
   return (
@@ -30,11 +40,17 @@ const Index = () => {
         <link rel="canonical" href="/" />
       </Helmet>
 
+      {/* Mouse cursor - only show after entering */}
+      {hasEntered && <MouseCursor />}
+
       {/* Preloader */}
       {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
 
+      {/* Enter Screen */}
+      {showEnterScreen && <EnterScreen onEnter={handleEnter} />}
+
       {/* Main content */}
-      <div className={`transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+      <div className={`transition-opacity duration-500 ${hasEntered ? 'opacity-100' : 'opacity-0'}`}>
         <Navigation />
         <main>
           <Hero />
