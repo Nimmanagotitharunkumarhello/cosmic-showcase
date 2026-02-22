@@ -1,11 +1,19 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
 const Hero = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const dotsRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check if mobile on mount and window resize
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const tl = gsap.timeline({ delay: 3.2 });
 
     // Animate tagline
@@ -60,6 +68,7 @@ const Hero = () => {
 
     return () => {
       tl.kill();
+      window.removeEventListener('resize', checkMobile);
     };
   }, []);
 
@@ -79,17 +88,21 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Fullscreen Spline 3D Background */}
-      <div className="absolute inset-0 z-0">
-        <iframe 
-          src='https://my.spline.design/orb-x3KbIiv7mkMK8ZOPA59TUCpF/' 
-          frameBorder='0' 
-          width='100%' 
-          height='100%'
-          className="scale-125"
-          title="3D Orb Animation"
-          style={{ pointerEvents: 'none' }}
-        />
+      {/* Background conditionally rendered for performance */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center">
+        {!isMobile ? (
+          <iframe
+            src='https://my.spline.design/orb-x3KbIiv7mkMK8ZOPA59TUCpF/'
+            frameBorder='0'
+            width='100%'
+            height='100%'
+            className="scale-125"
+            title="3D Orb Animation"
+            style={{ pointerEvents: 'none' }}
+          />
+        ) : (
+          <div className="w-[80vw] h-[80vw] max-w-[400px] max-h-[400px] rounded-full bg-gradient-radial from-primary/30 via-[hsl(280,80%,60%)]/20 to-transparent blur-[60px] opacity-80 animate-pulse" style={{ animationDuration: '4s' }} />
+        )}
         {/* Overlay gradient for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
       </div>
@@ -100,19 +113,19 @@ const Hero = () => {
         <div className="floating-dot absolute w-3 h-3 rounded-full bg-primary top-[20%] left-[25%] opacity-80" />
         <div className="floating-dot absolute w-2 h-2 rounded-full bg-primary top-[60%] left-[15%] opacity-60" />
         <div className="floating-dot absolute w-4 h-4 rounded-full bg-primary/80 bottom-[35%] right-[20%] opacity-70" />
-        
+
         {/* Purple/Pink dots */}
         <div className="floating-dot absolute w-2 h-2 rounded-full bg-[hsl(280,80%,60%)] top-[15%] left-[40%] opacity-60" />
         <div className="floating-dot absolute w-3 h-3 rounded-full bg-[hsl(320,80%,60%)] top-[25%] right-[30%] opacity-50" />
         <div className="floating-dot absolute w-2 h-2 rounded-full bg-[hsl(280,70%,50%)] bottom-[40%] left-[35%] opacity-40" />
-        
+
         {/* Green dots */}
         <div className="floating-dot absolute w-3 h-3 rounded-full bg-emerald-400 top-[30%] right-[25%] opacity-70" />
         <div className="floating-dot absolute w-2 h-2 rounded-full bg-emerald-500 bottom-[30%] right-[35%] opacity-50" />
       </div>
 
       {/* Centered content */}
-      <div 
+      <div
         ref={contentRef}
         className="relative z-20 text-center px-6 max-w-4xl mx-auto"
       >
@@ -136,20 +149,20 @@ const Hero = () => {
 
         {/* Description */}
         <p className="hero-description text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10 opacity-0">
-          Crafting intelligent solutions that inspire and engage through innovative 
-          AI and cutting-edge technology. Specializing in machine learning with a 
+          Crafting intelligent solutions that inspire and engage through innovative
+          AI and cutting-edge technology. Specializing in machine learning with a
           passion for creating impactful applications.
         </p>
 
         {/* CTA Buttons */}
         <div className="hero-buttons flex flex-wrap items-center justify-center gap-4 opacity-0">
-          <button 
+          <button
             onClick={scrollToProjects}
             className="px-8 py-4 rounded-full border border-border/50 text-foreground font-medium transition-all duration-300 hover:bg-card/50 hover:border-border"
           >
             View My Work
           </button>
-          <button 
+          <button
             onClick={scrollToContact}
             className="px-8 py-4 rounded-full font-medium transition-all duration-300"
             style={{
