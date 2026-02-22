@@ -54,7 +54,7 @@ const Navigation = () => {
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
             <img
-              src="/Gemini_Generated_Image_glpvfiglpvfiglpv.png"
+              src={`${import.meta.env.BASE_URL}Gemini_Generated_Image_glpvfiglpvfiglpv.png`}
               alt="Logo"
               className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-lg shadow-sm shadow-primary/20"
             />
