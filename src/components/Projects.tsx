@@ -1,72 +1,55 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Globe } from 'lucide-react';
 
-import project1 from '@/assets/project-1.png';
-import project2 from '@/assets/project-2.png';
-import project3 from '@/assets/project-3.png';
-import project4 from '@/assets/project-4.png';
-import project5 from '@/assets/project-5.png';
-import project6 from '@/assets/project-6.png';
+import project1 from '@/assets/ai agent.webp';
+import project3 from '@/assets/image.webp';
+import project2 from '@/assets/book p3.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
     id: 1,
-    title: '3D Gaming Interface',
-    description: 'Next-level gaming UI with immersive 3D elements and real-time animations',
-    image: project2,
-    tags: ['React', 'Three.js', 'GSAP'],
+    title: 'Ai VOICE AGENT',
+    description: 'End-to-end AI voice system with speech recognition, text-to-speech, and intelligent intent handling. Designed for modern startups and futuristic digital products, it features immersive UI and a dynamic tone.',
+    image: project1,
+    tags: ['Speech Recognition', 'NLP', 'AI Integration', 'Voice Agent', 'LiveKit'],
+    githubLink: 'https://github.com/Nimmanagotitharunkumarhello/ai_voice_agent.git',
+    liveLink: 'https://github.com/Nimmanagotitharunkumarhello/ai_voice_agent.git'
   },
   {
     id: 2,
-    title: '3D Portfolio Website',
-    description: 'Modern portfolio with Spline 3D integration and smooth animations',
+    title: 'Fake News Detector',
+    description: 'A supervised learning model with TF-IDF feature extraction. Built to reimagined content verification and user experience - all in one easy-to-use interface.',
     image: project3,
-    tags: ['React', 'Spline', 'GSAP'],
+    tags: ['Python', 'Scikit-learn', 'NLP'],
+    githubLink: 'https://github.com/Nimmanagotitharunkumarhello/fake_news_detection.git',
+    liveLink: 'https://github.com/Nimmanagotitharunkumarhello/fake_news_detection.git'
   },
   {
     id: 3,
-    title: 'Gaming Platform',
-    description: 'Complete gaming website with character profiles and interactive elements',
-    image: project4,
-    tags: ['React', 'CSS3', 'JavaScript'],
-  },
-  {
-    id: 4,
-    title: 'Creative Portfolio',
-    description: 'Animated portfolio with step-by-step tutorials and modern design',
-    image: project6,
-    tags: ['React', 'GSAP', 'CSS3'],
-  },
-  {
-    id: 5,
-    title: 'Animation Tools',
-    description: 'Web animation tools platform with learn-by-doing approach',
-    image: project5,
-    tags: ['React', 'GSAP', 'WebGL'],
-  },
-  {
-    id: 6,
-    title: '3D Interactive Web',
-    description: 'Interactive 3D web experience with email development tools',
-    image: project1,
-    tags: ['React', 'Three.js', 'Node.js'],
-  },
+    title: 'LLM Semantic Book Recommendation System',
+    description: 'AI-powered search engine that uses Large Language Models and vector embeddings to recommend books based on their deep thematic meaning, emotional "vibe," and natural language descriptions.',
+    image: project2, // Using the new image format
+    tags: ['Python', 'OpenAI API', 'ChromaDB'],
+    githubLink: 'https://github.com/Nimmanagotitharunkumarhello/LLM-Semantic-Book-Recommendation-System',
+    liveLink: 'https://llm-semantic-book-recommendation-sy-three.vercel.app/?_vercel_share=yJYZLcZCfwPwusSpqD24GGUc24TJRk7i'
+  }
 ];
 
 const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const projectsContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const header = headerRef.current;
-    const cardsContainer = cardsContainerRef.current;
+    const projectsContainer = projectsContainerRef.current;
 
-    if (!section || !header || !cardsContainer) return;
+    if (!section || !header || !projectsContainer) return;
 
     // Header animation
     gsap.fromTo(header,
@@ -84,23 +67,24 @@ const Projects = () => {
       }
     );
 
-    // Cards stagger animation
-    const cards = cardsContainer.querySelectorAll('.project-card');
-    gsap.fromTo(cards,
-      { opacity: 0, y: 60, scale: 0.95 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.6,
-        stagger: 0.12,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: cardsContainer,
-          start: 'top 75%',
+    // Projects stagger animation
+    const projectElements = projectsContainer.querySelectorAll('.project-item');
+    projectElements.forEach((el, index) => {
+      const isEven = index % 2 === 1;
+      gsap.fromTo(el,
+        { opacity: 0, x: isEven ? 50 : -50 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 60%',
+          }
         }
-      }
-    );
+      );
+    });
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
@@ -108,74 +92,69 @@ const Projects = () => {
   }, []);
 
   return (
-    <section 
-      ref={sectionRef} 
-      id="projects" 
-      className="relative py-24 md:py-32 overflow-hidden"
+    <section
+      ref={sectionRef}
+      id="projects"
+      className="relative py-24 md:py-32 overflow-hidden bg-background"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-card/30 via-background to-card/20" />
-      
-      {/* Top divider line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section header */}
-        <div ref={headerRef} className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="text-foreground">Featured </span>
-            <span className="bg-gradient-to-r from-[hsl(280,70%,50%)] to-primary bg-clip-text text-transparent">Projects</span>
+        {/* Section header optionally can be displayed, but kept hidden to match mockup without global header */}
+        <div ref={headerRef} className="text-center mb-16 hidden">
+          <h2 className="text-4xl font-bold mb-6 text-foreground">
+            Featured Projects
           </h2>
-          <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-            Explore my latest work showcasing cutting-edge web technologies, 3D interactions, 
-            and immersive user experiences.
-          </p>
         </div>
 
-        {/* Projects grid - 3x2 layout */}
-        <div 
-          ref={cardsContainerRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {projects.map((project) => (
-            <div 
-              key={project.id} 
-              className="project-card glass rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_40px_hsl(var(--primary)/0.2)] group"
-            >
-              {/* Image */}
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent opacity-60" />
-              </div>
-              
-              {/* Content */}
-              <div className="p-6 space-y-3">
-                <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
-                  {project.title}
-                </h3>
-                
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {project.description}
-                </p>
-                
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {project.tags.map((tag) => (
-                    <span 
-                      key={tag}
-                      className="text-xs px-3 py-1.5 rounded-full bg-[hsl(280,70%,50%)]/10 text-[hsl(280,70%,50%)] border border-[hsl(280,70%,50%)]/20 transition-all duration-300 hover:bg-[hsl(280,70%,50%)]/20"
+        {/* Projects Stack Layout */}
+        <div ref={projectsContainerRef} className="flex flex-col gap-24 md:gap-40 max-w-6xl mx-auto pt-10">
+          {projects.map((project, index) => {
+            const isEven = index % 2 === 1;
+            return (
+              <div
+                key={project.id}
+                className={`project-item relative flex flex-col ${isEven ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-12 lg:gap-0`}
+              >
+                {/* Project Content */}
+                <div className={`w-full lg:w-1/2 flex flex-col ${isEven ? 'lg:items-end lg:text-right z-10' : 'lg:items-start lg:text-left z-10'}`}>
+                  <span className="text-[hsl(280,70%,60%)] font-bold mb-4 tracking-wide text-sm md:text-base">Featured Project</span>
+                  <h3 className="text-3xl md:text-4xl lg:text-[42px] font-extrabold text-white mb-6 max-w-lg leading-tight tracking-tight">
+                    {project.title}
+                  </h3>
+
+                  <div className={`glass p-6 md:p-8 rounded-2xl max-w-xl shadow-2xl backdrop-blur-xl bg-[#1A1A24]/60 border border-white/5 ${isEven ? 'lg:-ml-16' : 'lg:-mr-16'} z-20`}>
+                    <p className="text-gray-300 leading-relaxed text-sm md:text-base font-medium">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  <div className={`flex items-center gap-4 mt-6 ${isEven ? 'justify-end' : 'justify-start'}`}>
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-white transition-all duration-300 p-2 rounded-full hover:bg-white/10"
                     >
-                      {tag}
-                    </span>
-                  ))}
+                      <Globe className="w-5 h-5 md:w-6 md:h-6" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Project Image */}
+                <div className="w-full lg:w-[60%] relative group z-0">
+                  <div className="relative rounded-xl overflow-hidden shadow-2xl aspect-[16/10] bg-secondary/10 border border-white/5">
+                    <div className="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-overlay"></div>
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    {/* Bottom Blur Overlay */}
+                    <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-background via-background/80 to-transparent z-10 pointer-events-none backdrop-blur-[2px]"></div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

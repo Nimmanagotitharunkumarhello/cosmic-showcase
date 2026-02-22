@@ -4,6 +4,7 @@ import EnterScreen from '@/components/EnterScreen';
 import MouseCursor from '@/components/MouseCursor';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
+import AnimatedProfiles from '@/components/AnimatedProfiles';
 import About from '@/components/About';
 import Projects from '@/components/Projects';
 import Contact from '@/components/Contact';
@@ -22,9 +23,9 @@ const Index = () => {
     <>
       <Helmet>
         <title>Nimmanagoti Tharun Kumar | AI & ML Engineer Portfolio</title>
-        <meta 
-          name="description" 
-          content="AI & ML Engineer specializing in machine learning solutions, AI voice agents, and web development. Explore my projects and get in touch." 
+        <meta
+          name="description"
+          content="AI & ML Engineer specializing in machine learning solutions, AI voice agents, and web development. Explore my projects and get in touch."
         />
         <meta name="keywords" content="AI, ML, Machine Learning, Python, React, Portfolio, Developer" />
         <meta property="og:title" content="Nimmanagoti Tharun Kumar | AI & ML Engineer" />
@@ -44,6 +45,7 @@ const Index = () => {
         <Navigation />
         <main>
           <Hero />
+          <AnimatedProfiles />
           <About />
           <Projects />
           <Contact />

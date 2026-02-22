@@ -16,7 +16,7 @@ const Navigation = () => {
 
   useEffect(() => {
     if (isOpen) {
-      gsap.fromTo('.mobile-menu', 
+      gsap.fromTo('.mobile-menu',
         { opacity: 0, x: '100%' },
         { opacity: 1, x: '0%', duration: 0.4, ease: 'power3.out' }
       );
@@ -44,17 +44,20 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass-strong py-4' : 'bg-transparent py-6'
-      }`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass-strong py-4' : 'bg-transparent py-6'
+        }`}>
         <div className="container mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
-          <a 
-            href="#home" 
+          <a
+            href="#home"
             onClick={(e) => { e.preventDefault(); scrollToSection('#home'); }}
-            className="text-2xl font-bold text-primary hover:opacity-80 transition-opacity"
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            TK
+            <img
+              src="/Gemini_Generated_Image_glpvfiglpvfiglpv.png"
+              alt="Logo"
+              className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-lg shadow-sm shadow-primary/20"
+            />
           </a>
 
           {/* Desktop Navigation */}

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { 
-  Globe, 
+import {
+  Globe,
   Lightning,
   Code,
   Cpu,
@@ -11,7 +11,7 @@ import {
   Terminal,
   Robot
 } from '@phosphor-icons/react';
-import profileImage from '@/assets/profile.png';
+import profileImage from '@/assets/profiiii.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -103,42 +103,72 @@ const About = () => {
   }, []);
 
   return (
-    <section 
-      ref={sectionRef} 
-      id="about" 
+    <section
+      ref={sectionRef}
+      id="about"
       className="relative py-24 md:py-32 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
-      
+
       {/* Floating dots */}
       <div className="absolute top-1/4 right-1/3 w-3 h-3 rounded-full bg-[hsl(280,70%,50%)] opacity-60 animate-float" />
       <div className="absolute bottom-1/3 left-1/4 w-2 h-2 rounded-full bg-primary opacity-50 animate-float animation-delay-200" />
-      
+
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Left - Profile image - CENTERED */}
-          <div ref={imageRef} className="relative flex justify-center">
-            <div className="relative">
-              {/* Glowing ring */}
-              <div className="absolute inset-0 rounded-full animate-spin-slow opacity-40" style={{
-                background: 'conic-gradient(from 0deg, hsl(185 85% 50% / 0.6), hsl(280 80% 60% / 0.4), hsl(185 85% 50% / 0.6))',
-                filter: 'blur(25px)',
-                transform: 'scale(1.1)',
-              }} />
-              
-              {/* Profile container */}
-              <div className="relative w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-primary/30 group">
-                <img 
-                  src={profileImage} 
+          <div ref={imageRef} className="relative flex justify-center items-end h-[400px] md:h-[580px] w-full max-w-[500px] mx-auto">
+            {/* 
+              Background Circle. 
+              This represents the "base" of the circle shape. 
+            */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[340px] h-[340px] md:w-[480px] md:h-[480px] bg-[#1a1a24] rounded-full -z-10 border border-white/5 shadow-2xl" />
+
+            {/* 
+              Profile Profile Container with complex clipping/masking.
+              We want the bottom half to be perfectly circular (matching the background circle), 
+              but the top half needs to break free of the circle.
+            */}
+            <div className="relative w-full h-full flex justify-center items-end pb-8 z-10 transition-transform duration-700 hover:-translate-y-2"
+              style={{
+                // This mask creates a shape that is rectangular at the top and circular at the bottom.
+                // The bottom part of the mask is an ellipse that matches the shape of our circular background.
+                // The top part is a rectangle that allows the head and shoulders to pop out.
+                maskImage: 'radial-gradient(ellipse 50% 50% at 50% auto, black 100%, transparent 100%), linear-gradient(black, black)',
+                maskSize: '100% 340px, 100% calc(100% - 170px)', // Bottom circle height, Top rectangle height
+                maskPosition: 'bottom center, top center',
+                maskRepeat: 'no-repeat',
+                WebkitMaskImage: 'radial-gradient(170px 170px at 50% calc(100% - 170px), black 100%, transparent 100%), linear-gradient(black, black)',
+                WebkitMaskSize: '100% 100%, 100% calc(100% - 170px)',
+                WebkitMaskPosition: 'bottom center, top center',
+                WebkitMaskRepeat: 'no-repeat',
+              }}>
+              {/* For mobile md breakpoint adjust sizes */}
+              <style suppressHydrationWarning>{`
+                    @media (min-width: 768px) {
+                      .profile-mask-container {
+                         -webkit-mask-image: radial-gradient(240px 240px at 50% calc(100% - 240px), black 100%, transparent 100%), linear-gradient(black, black) !important;
+                         -webkit-mask-size: 100% 100%, 100% calc(100% - 240px) !important;
+                      }
+                    }
+                 `}</style>
+
+              <div className="profile-mask-container w-full h-full flex justify-center items-end"
+                style={{
+                  WebkitMaskImage: 'radial-gradient(170px 170px at 50% calc(100% - 170px), black 100%, transparent 100%), linear-gradient(black, black)',
+                  WebkitMaskSize: '100% 100%, 100% calc(100% - 170px)',
+                  WebkitMaskPosition: 'bottom center, top center',
+                  WebkitMaskRepeat: 'no-repeat',
+                }}>
+
+                <img
+                  src={profileImage}
                   alt="Nimmanagoti Tharun Kumar - AI & ML Engineer"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-[340px] md:w-[480px] h-[380px] md:h-[540px] object-cover object-top grayscale transition-all duration-700 group-hover:grayscale-0"
                 />
               </div>
-              
-              {/* Floating dots around image */}
-              <div className="absolute -top-4 right-8 w-4 h-4 rounded-full bg-[hsl(280,70%,50%)] opacity-70 animate-float" />
-              <div className="absolute bottom-8 -left-4 w-3 h-3 rounded-full bg-primary opacity-80 animate-float animation-delay-400" />
+
             </div>
           </div>
 
@@ -159,11 +189,10 @@ const About = () => {
                 <p
                   key={index}
                   onClick={() => setActivePara(activePara === index ? null : index)}
-                  className={`leading-relaxed cursor-pointer transition-all duration-500 ${
-                    activePara === index 
-                      ? 'text-foreground font-medium drop-shadow-[0_0_10px_hsl(185,85%,50%)]' 
-                      : 'text-muted-foreground hover:text-muted-foreground/80'
-                  }`}
+                  className={`leading-relaxed cursor-pointer transition-all duration-500 ${activePara === index
+                    ? 'text-foreground font-medium drop-shadow-[0_0_10px_hsl(185,85%,50%)]'
+                    : 'text-muted-foreground hover:text-muted-foreground/80'
+                    }`}
                 >
                   {text}
                 </p>
@@ -177,14 +206,14 @@ const About = () => {
               </h3>
               <div ref={skillsRef} className="grid grid-cols-4 gap-3">
                 {skills.map((skill) => (
-                  <div 
-                    key={skill.name} 
+                  <div
+                    key={skill.name}
                     className="skill-card glass flex flex-col items-center justify-center gap-2 p-4 rounded-xl transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 group"
                   >
-                    <skill.icon 
-                      size={24} 
-                      className="text-muted-foreground group-hover:text-primary transition-colors" 
-                      weight="light" 
+                    <skill.icon
+                      size={24}
+                      className="text-muted-foreground group-hover:text-primary transition-colors"
+                      weight="light"
                     />
                     <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors text-center">
                       {skill.name}
